@@ -32,31 +32,40 @@ type StreamEvent struct {
 }
 
 // Requests a stream from the vehicle and returns a Go channel
-func (v Vehicle) Stream() (chan *StreamEvent, chan error, error) {
+func (v Vehicle) Stream() (chan *StreamEvent, chan bool, chan error, error) {
 	url := StreamingURL + "/stream/" + strconv.Itoa(v.VehicleID) + "/?values=" + StreamParams
 	req, _ := http.NewRequest("GET", url, nil)
 	req.SetBasicAuth(ActiveClient.Auth.Email, v.Tokens[0])
 	resp, err := ActiveClient.HTTP.Do(req)
 
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, err
 	}
 
 	eventChan := make(chan *StreamEvent)
 	errChan := make(chan error)
-	go readStream(resp, eventChan, errChan)
+	cancelChan := make(chan bool)
+	go readStream(resp, eventChan, cancelChan, errChan)
 
-	return eventChan, errChan, nil
+	return eventChan, cancelChan, errChan, nil
 }
 
 // Reads the stream itself from the vehicle
-func readStream(resp *http.Response, eventChan chan *StreamEvent, errChan chan error) {
+func readStream(resp *http.Response, eventChan chan *StreamEvent, cancelChan chan bool, errChan chan error) {
+	defer close(eventChan)
+	defer close(errChan)
 	reader := bufio.NewReader(resp.Body)
 	scanner := bufio.NewScanner(reader)
 	scanner.Split(bufio.ScanLines)
 	defer resp.Body.Close()
 
 	for scanner.Scan() {
+		select {
+		case <-cancelChan:
+			break
+		default:
+		}
+
 		streamEvent, err := parseStreamEvent(scanner.Text())
 		if err == nil {
 			eventChan <- streamEvent
