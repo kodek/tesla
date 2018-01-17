@@ -11,7 +11,7 @@ type Vehicle struct {
 	VehicleID              int         `json:"vehicle_id"`
 	Vin                    string      `json:"vin"`
 	Tokens                 []string    `json:"tokens"`
-	State                  string      `json:"state"`
+	State                  *string      `json:"state"`
 	IDS                    string      `json:"id_s"`
 	RemoteStartEnabled     bool        `json:"remote_start_enabled"`
 	CalendarEnabled        bool        `json:"calendar_enabled"`
