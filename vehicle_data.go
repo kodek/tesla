@@ -58,21 +58,22 @@ type VehicleData struct {
 		FastChargerType             string      `json:"fast_charger_type"`
 		IdealBatteryRange           float64     `json:"ideal_battery_range"`
 		ManagedChargingActive       bool        `json:"managed_charging_active"`
-		ManagedChargingStartTime    string      `json:"managed_charging_start_time"`
+		ManagedChargingStartTime    interface{} `json:"managed_charging_start_time"`
 		ManagedChargingUserCanceled bool        `json:"managed_charging_user_canceled"`
 		MaxRangeChargeCounter       int         `json:"max_range_charge_counter"`
 		NotEnoughPowerToHeat        bool        `json:"not_enough_power_to_heat"`
 		ScheduledChargingPending    bool        `json:"scheduled_charging_pending"`
-		ScheduledChargingStartTime  string      `json:"scheduled_charging_start_time"`
+		ScheduledChargingStartTime  interface{} `json:"scheduled_charging_start_time"`
 		TimeToFullCharge            float64     `json:"time_to_full_charge"`
 		Timestamp                   int64       `json:"timestamp"`
 		TripCharging                bool        `json:"trip_charging"`
 		UsableBatteryLevel          int         `json:"usable_battery_level"`
-		UserChargeEnableRequest     string      `json:"user_charge_enable_request"`
+		UserChargeEnableRequest     interface{} `json:"user_charge_enable_request"`
 	} `json:"charge_state"`
 	ClimateState struct {
 		BatteryHeater              bool        `json:"battery_heater"`
 		BatteryHeaterNoPower       bool        `json:"battery_heater_no_power"`
+		ClimateKeeperMode          string      `json:"climate_keeper_mode"`
 		DriverTempSetting          float64     `json:"driver_temp_setting"`
 		FanStatus                  int         `json:"fan_status"`
 		InsideTemp                 float64     `json:"inside_temp"`
@@ -89,9 +90,15 @@ type VehicleData struct {
 		RemoteHeaterControlEnabled bool        `json:"remote_heater_control_enabled"`
 		RightTempDirection         interface{} `json:"right_temp_direction"`
 		SeatHeaterLeft             int         `json:"seat_heater_left"`
+		SeatHeaterRearCenter       int         `json:"seat_heater_rear_center"`
+		SeatHeaterRearLeft         int         `json:"seat_heater_rear_left"`
+		SeatHeaterRearLeftBack     int         `json:"seat_heater_rear_left_back"`
+		SeatHeaterRearRight        int         `json:"seat_heater_rear_right"`
+		SeatHeaterRearRightBack    int         `json:"seat_heater_rear_right_back"`
 		SeatHeaterRight            int         `json:"seat_heater_right"`
 		SideMirrorHeaters          bool        `json:"side_mirror_heaters"`
 		SmartPreconditioning       bool        `json:"smart_preconditioning"`
+		SteeringWheelHeater        bool        `json:"steering_wheel_heater"`
 		Timestamp                  int64       `json:"timestamp"`
 		WiperBladeHeater           bool        `json:"wiper_blade_heater"`
 	} `json:"climate_state"`
@@ -127,6 +134,7 @@ type VehicleData struct {
 		ExteriorColor               string `json:"exterior_color"`
 		HasAirSuspension            bool   `json:"has_air_suspension"`
 		HasLudicrousMode            bool   `json:"has_ludicrous_mode"`
+		KeyVersion                  int    `json:"key_version"`
 		MotorizedChargePort         bool   `json:"motorized_charge_port"`
 		PerfConfig                  string `json:"perf_config"`
 		Plg                         bool   `json:"plg"`
@@ -165,8 +173,10 @@ type VehicleData struct {
 		Pf                      int     `json:"pf"`
 		Pr                      int     `json:"pr"`
 		RemoteStart             bool    `json:"remote_start"`
+		RemoteStartEnabled      bool    `json:"remote_start_enabled"`
 		RemoteStartSupported    bool    `json:"remote_start_supported"`
 		Rt                      int     `json:"rt"`
+		SentryMode              bool    `json:"sentry_mode"`
 		SoftwareUpdate          struct {
 			ExpectedDurationSec int    `json:"expected_duration_sec"`
 			Status              string `json:"status"`
@@ -182,6 +192,7 @@ type VehicleData struct {
 		SunRoofState       string `json:"sun_roof_state"`
 		Timestamp          int64  `json:"timestamp"`
 		ValetMode          bool   `json:"valet_mode"`
+		ValetPinNeeded     bool   `json:"valet_pin_needed"`
 		VehicleName        string `json:"vehicle_name"`
 	} `json:"vehicle_state"`
 }
