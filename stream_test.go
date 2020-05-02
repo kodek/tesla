@@ -26,7 +26,7 @@ func TestStreamSpec(t *testing.T) {
 	StreamingURL = ts.URL
 
 	Convey("Should get stream events", t, func() {
-		eventChan, errChan, err := vehicle.Stream()
+		eventChan, _, errChan, err := vehicle.Stream()
 		So(err, ShouldBeNil)
 
 		Convey("2 good, 1 bad", func() {
@@ -46,7 +46,7 @@ func TestStreamSpec(t *testing.T) {
 			case event := <-eventChan:
 				So(event, ShouldBeNil)
 			case err = <-errChan:
-				So(err.Error(), ShouldEqual, "Bad message from Tesla API stream")
+				So(err.Error(), ShouldStartWith, "Bad message from Tesla API stream")
 			}
 			select {
 			case event := <-eventChan:

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jsgoecke/tesla"
+	"github.com/kodek/tesla"
 )
 
 func main() {
@@ -67,7 +67,7 @@ func main() {
 	// Take care with these, as the car will move
 
 	// Stream vehicle events
-	eventChan, errChan, err := vehicle.Stream()
+	eventChan, _, errChan, err := vehicle.Stream()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -81,7 +81,7 @@ func main() {
 				fmt.Println(err)
 				if err.Error() == "HTTP stream closed" {
 					fmt.Println("Reconnecting!")
-					eventChan, errChan, err = vehicle.Stream()
+					eventChan, _, errChan, err = vehicle.Stream()
 					if err != nil {
 						fmt.Println(err)
 						return
