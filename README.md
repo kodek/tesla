@@ -1,6 +1,8 @@
-# tesla
-[![wercker status](https://app.wercker.com/status/c8e21c53ed5763b0b58f763670753732/m "wercker status")](https://app.wercker.com/project/bykey/c8e21c53ed5763b0b58f763670753732)
+# DEPRECATED
 
+Tesla has released their [Fleet API](https://developer.tesla.com), deprecating the API this library used.
+
+# tesla
 <p align="center">
   <img src="https://raw.githubusercontent.com/jsgoecke/tesla/master/images/gotesla.png">
   <img src="https://raw.githubusercontent.com/jsgoecke/tesla/master/images/tesla-model-s.png">
